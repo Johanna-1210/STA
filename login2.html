@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Scrollable Login</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #1d2671, #c33764);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        width: 350px;
+        height: 300px;
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        overflow-y: auto;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        scroll-behavior: smooth;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .password-box {
+        position: relative;
+    }
+
+    .toggle {
+        position: absolute;
+        right: 10px;
+        top: 12px;
+        cursor: pointer;
+        font-size: 12px;
+        color: #555;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: none;
+        background: #c33764;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #a52a50;
+    }
+
+    .message {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .extra {
+        margin-top: 20px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .success { color: green; }
+    .error { color: red; }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="box">
+
+    <h2>Login</h2>
+
+    <form onsubmit="return loginUser()">
+        <input type="text" id="username" placeholder="Username">
+
+        <div class="password-box">
+            <input type="password" id="password" placeholder="Password">
+            <span class="toggle" onclick="togglePassword()">Show</span>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div id="msg" class="message"></div>
+
+    <!-- Scrollable Extra Content -->
+    <div class="extra">
+        <p>Forgot Password?</p>
+        <p>Create New Account</p>
+        <p>Help & Support</p>
+        <p>Terms & Conditions</p>
+        <p>Privacy Policy</p>
+        <p>Contact Us</p>
+        <p>About Company</p>
+        <p>More Features Coming Soon...</p>
+    </div>
+
+</div>
+
+<script>
+function loginUser() {
+    let user = document.getElementById("username").value.trim();
+    let pass = document.getElementById("password").value.trim();
+    let msg = document.getElementById("msg");
+    let box = document.getElementById("box");
+
+    msg.innerHTML = "";
+
+    if (user === "" || pass === "") {
+        msg.innerHTML = "Please fill all fields";
+        msg.className = "message error";
+    } 
+    else if (user === "admin" && pass === "1234") {
+        msg.innerHTML = "Login Successful!";
+        msg.className = "message success";
+
+        // Smooth scroll to bottom
+        box.scrollTo({
+            top: box.scrollHeight,
+            behavior: "smooth"
+        });
+    } 
+    else {
+        msg.innerHTML = "Invalid Username or Password";
+        msg.className = "message error";
+    }
+
+    return false;
+}
+
+// Show / Hide Password
+function togglePassword() {
+    let passField = document.getElementById("password");
+    let toggleText = document.querySelector(".toggle");
+
+    if (passField.type === "password") {
+        passField.type = "text";
+        toggleText.innerHTML = "Hide";
+    } else {
+        passField.type = "password";
+        toggleText.innerHTML = "Show";
+    }
+}
+</script>
+
+</body>
+</html>
